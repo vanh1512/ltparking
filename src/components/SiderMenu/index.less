@@ -1,0 +1,132 @@
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.trigger:hover {
+    color: #1890ff;
+}
+
+.logo {
+    height: 32px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 16px;
+}
+
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: #455A64;
+    -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: #455A64;
+}
+
+//begin siderbar
+.sidebar.expanded {
+    transform: translateX(0);
+    /* Trượt sidebar vào khung nhìn */
+}
+
+.siderbar {
+    overflow: hidden;
+
+    &__block {
+        min-height: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__icon {
+        &.-size-large {
+            width: auto;
+            height: 30px;
+        }
+
+        &.-size-small {
+            width: 50px;
+            height: 50px;
+        }
+    }
+
+    &__menu {
+        height: calc(100vh - 120px);
+        overflow: auto;
+    }
+
+    &__contact {
+        width: 100%;
+        height: 65px;
+        position: sticky;
+        bottom: 0;
+        color: white;
+        background-color: #001529;
+        font-size: 13px;
+        text-align: center;
+        border-top: solid #bfbfbf 2px;
+    }
+
+    &__about {
+        color: #FE9216;
+        font-weight: bold;
+    }
+
+    &__about:hover {
+        color: #FC2525;
+    }
+
+    &__user-manual {
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+    &__user-manual:hover {
+        color: #1da57a;
+    }
+
+    &__submenu {
+        color: #ffffff;
+        display: flex;
+    }
+
+    &__title {
+        height: auto !important;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+
+        &.-display-none {
+            display: none;
+        }
+    }
+}
+
+.ant-menu::-webkit-scrollbar {
+    width: 0 !important;
+}
+
+/// chữ trên submenu xuống dòng
+.ant-menu-item {
+    height: auto !important;
+}
+
+//end siderbar

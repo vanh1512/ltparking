@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="div-container">
+            <p class="p-tittle">Sử dụng sản phẩm là bạn đã đóng góp <strong style="color: rgb(29, 165, 122);">1%
+                </strong>vào <strong style="color: rgb(29, 165, 122);">quỹ tiêu dùng xanh</strong> của đơn vị!</p>
+            <div class="image-gif">
+                <div class="div-money">
+                    <strong id="money" style="color: white">192.258
+                    </strong>
+                    &nbsp;<strong style="color: white;">đ</strong>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        var isManager = true;
+        var url = isManager ? "http://vend.mstore.asia:6868/api/services/app" : "http://dev.green-tech.org.vn:45146/api/services/app";
+        function fetchDataAndUpdate() {
+            $.ajax({
+                url: `${url}/StatisticStorageMVP/StatisticBillingOfQuyTieuDungXanh`,
+                method: 'POST',
+                contentType: "application/json",
+                dataType: "json",
+                accepts: "application/json",
+                success: function (response) {
+                    const money = response.result / 100;
+                    $('#money').text(new Intl.NumberFormat('vi-VN').format(money));
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+        $(document).ready(function () {
+            fetchDataAndUpdate()
+            const interval = setInterval(fetchDataAndUpdate, 5000)
+        });
+    </script>
+</body>
+
+</html>

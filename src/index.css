@@ -1,0 +1,885 @@
+html {
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    scroll-behavior: smooth !important;
+}
+
+.ant-card-body {
+    font-size: 13px;
+    padding: 10px;
+}
+
+.ant-modal-body {
+    padding-top: 0;
+}
+
+.ant-table-container {
+    font-size: 12px;
+}
+
+.ant-btn {
+    font-size: 12px;
+}
+
+.ant-tag {
+    font-size: 10px !important;
+}
+
+.ant-table-thead>tr>th {
+    background-color: #1da57a !important;
+    color: rgb(255, 255, 255) !important;
+}
+
+.ant-tabs-tab {
+    margin-right: 20px !important;
+}
+
+h2 {
+    margin: 0px;
+}
+
+.ant-pagination {
+    font-size: 13px;
+    margin: 0px 0px 5px 0px !important;
+}
+
+.centerTable .ant-table-thead>tr>th {
+    text-align: center !important;
+    page-break-inside: avoid;
+}
+
+.centerTable .ant-table-tbody>tr>td {
+    text-align: center !important;
+    page-break-inside: avoid;
+}
+
+.bg-folder {
+    background-color: #f2f6fc;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.bg-red {
+    background-color: rgb(255, 0, 0);
+}
+
+.bg-click {
+    background-color: #dbe7e3;
+}
+
+.text-red {
+    color: red;
+}
+
+.text-black {
+    color: black;
+}
+
+.text-green {
+    color: #52c41a;
+}
+
+.text-primary {
+    color: #1DA57A;
+}
+
+.text-blue {
+    color: #1890FF;
+}
+
+.text-orange,
+.text-warning {
+    color: #FAAD14;
+}
+
+.text-red,
+.text-error {
+    color: #FF4D4F;
+}
+
+.text-purple {
+    color: #9254de;
+}
+.center {
+    text-align: center !important;
+}
+
+.bg-red-display {
+    color: red !important;
+}
+
+.bg-DataDisplay-click {
+    background-color: #4198a9 !important;
+    color: white !important;
+}
+
+.text-overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.text-overflow-ellipsis-3 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.dislplayBlock {
+    display: block !important;
+}
+
+.custom-divider {
+    display: flex;
+    align-items: center;
+}
+
+.custom-divider::before,
+.custom-divider::after {
+    content: "======";
+    /* Sử dụng ký tự "=" làm nội dung của đường phân cách */
+    flex: 1;
+    text-align: center;
+
+}
+
+.success-display {
+    color: green !important;
+}
+
+.create-display {
+    color: #1890ff !important;
+}
+
+.payment-display {
+    color: #CD8500 !important;
+}
+
+.hoverCell {
+    cursor: pointer;
+}
+
+/* begin col 5 */
+@media (min-width: 1200px) {
+    .ant-col-xl-20-percent {
+        display: block;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@media (min-width: 992px) {
+    .ant-col-lg-20-percent {
+        display: block;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@media (min-width: 992px) {
+    .ant-col-md-20-percent {
+        display: block;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@media (min-width: 576px) {
+    .ant-col-sm-20-percent {
+        display: block;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+@media (max-width: 576px) {
+    .ant-col-20-percent {
+        display: block;
+        -ms-flex: 0 0 20%;
+        flex: 0 0 20%;
+        max-width: 20%;
+    }
+}
+
+/* end col 5 */
+
+@media screen and (max-width: 768px) {
+    .textAlign768px {
+        text-align: center !important;
+    }
+}
+
+/* ------------- */
+.textAlign-col-992 {
+    text-align: right;
+    /* Mặc định áp dụng cho tất cả các kích thước */
+}
+
+@media screen and (max-width: 992px) {
+
+    /* Loại bỏ style khi màn hình nhỏ (sm và md) */
+    .textAlign-col-992 {
+        text-align: start;
+    }
+
+    .textAlignLeft992px {
+        text-align: left;
+    }
+}
+
+.textAlign-col-1200 {
+    text-align: right;
+}
+
+@media screen and (max-width: 1200px) {
+
+    /* Loại bỏ style khi màn hình nhỏ (sm và md) */
+    .textAlign-col-1200 {
+        text-align: start;
+    }
+}
+
+.textAlign-col-768 {
+    text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+
+    .textAlign-col-768 {
+        text-align: left !important;
+    }
+}
+
+.textAlign-col-576 {
+    text-align: right;
+}
+
+.textAlignLeft-col-576 {
+    text-align: left;
+}
+
+@media screen and (max-width: 576px) {
+
+    .textAlign-col-576 {
+        text-align: left;
+    }
+
+    .textAlignLeft-col-576 {
+        text-align: left;
+    }
+}
+
+.flex-form {
+    display: flex;
+}
+
+@media screen and (max-width: 768px) {
+    .flex-form {
+        display: block;
+    }
+}
+
+.textAlignCenter-col-768 {
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    .textAlignCenter-col-768 {
+        text-align: start;
+    }
+}
+
+.textAlignCenter-col-992 {
+    text-align: center;
+}
+
+@media screen and (max-width: 992px) {
+    .textAlignCenter-col-992 {
+        text-align: start;
+    }
+}
+
+.textAlignCenter-col-1200px {
+    text-align: center;
+}
+
+@media screen and (max-width: 1200px) {
+    .textAlignCenter-col-1200px {
+        text-align: start;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .ant-col-xs-no-maxwidth {
+        max-width: none !important;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .alighItemFlexEnd-col-1600px {
+        display: flex;
+        align-items: flex-end !important;
+    }
+}
+
+.labelwrap {
+    white-space: pre-line !important;
+    color: red !important;
+
+}
+
+.ant-table-thead>tr>th {
+    background-color: #1da57a !important;
+    color: rgb(0, 0, 0) !important;
+    font-weight: 600;
+}
+
+@media print {
+    .no-page-break {
+        page-break-inside: avoid;
+    }
+
+    header {
+        display: none;
+    }
+
+    footer {
+        display: none;
+    }
+}
+
+/* .ant-form-item-required{
+    color: red !important;
+} */
+.uploadExcel {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.recharts-legend-wrapper {
+    display: contents;
+}
+
+/* .hiddenDelete .ant-upload-list-item-actions button {
+    display: none !important;
+}
+
+.hiddenDelete .ant-upload-list-item-card-actions button {
+    display: none !important;
+} */
+.sliding-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    background: linear-gradient(to bottom, #f9f9f9, #e5e5e5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    transition: transform 0.5s ease-in-out;
+    animation: slide 5s infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.ant-upload-list-item-thumbnail {
+    opacity: unset !important;
+}
+
+.ant-upload-list-picture-card .ant-upload-list-item-info::before {
+    display: block;
+}
+
+.ant-table-sticky-scroll-bar {
+    width: 0px !important;
+}
+
+.file_acttach_ment .anticon-paper-clip {
+    display: none;
+
+}
+
+.tableImport td {
+    border: 1px solid;
+}
+
+.tableImport th {
+    width: 33.33%;
+    border: 1px solid;
+    text-align: center;
+    padding: 8px;
+}
+
+.tableImport {
+    width: 100%;
+}
+
+.tableImport td {
+    font-weight: 600;
+    text-align: center;
+}
+
+.tableImport thead th {
+    background: #1DA57A;
+}
+
+/* ProductCard.css */
+.product-card {
+    width: 150px;
+    height: 240px;
+    margin: 0;
+    padding: 12px 8px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-space {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.position {
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 8px;
+}
+
+.product-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 8px;
+}
+
+.product-price {
+    font-size: 16px;
+    color: #000000;
+    margin: 8px 0;
+}
+
+.product-name {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333333;
+    text-align: center;
+    margin-bottom: 8px;
+    height: 40px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.2em;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    margin-top: auto;
+    /* Push to the bottom */
+    flex-direction: column;
+}
+
+.quantity {
+    margin: 0 16px;
+    font-size: 16px;
+}
+
+.imgInvoice .ant-image-img {
+    width: 150px !important;
+    height: 150px !important;
+    margin: 0px 15px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.imageDetailProductImport .ant-image-img {
+    width: 45% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+.ant-select-selection-item .hintImage{
+display: none !important;
+}
+.imageDetailProductImport {
+    display: flex !important;
+    justify-content: center !important;
+    padding: 5px;
+}
+
+.heightWindow {
+    height: 90vh !important;
+}
+
+.heightWindow .ant-card-body {
+    height: 100%;
+}
+
+.imageDetailImportRepository .ant-image-img {
+    width: 23% !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.imageProduct .ant-image-img {
+    width: 60% !important;
+}
+.image-statistic-product{
+    width: 40% !important;
+}
+
+.imageDetailProduct .ant-image-img {
+    width: 50% !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.imageDetailProductExportExcel .ant-image-img {
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.cssImportProduct>span {
+    width: 100%;
+}
+
+.cssImportProduct>span>.ant-upload {
+    display: flex;
+    justify-content: center;
+}
+
+.cssImportProduct .ant-upload-list {
+    overflow: auto;
+    height: 50vh;
+}
+
+.formNoMargin {
+    .ant-form-item {
+        margin: 5px 0 !important;
+    }
+
+    .ant-form-item-control-input {
+        text-align: start;
+    }
+}
+
+.stickyElement {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    top: 0 !important;
+}
+
+
+
+.moreInfo {
+    font-size: 18px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.moreInfo:hover {
+    background-color: lightgray;
+    border-radius: 50%
+}
+
+.ant-list-items {
+    max-height: 70vh;
+    overflow-y: scroll;
+}
+
+.ant-list-footer {
+    background-color: white;
+}
+
+.notification {
+    border: 1px solid #b6e0fe;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+    position: relative;
+}
+
+.notification p {
+    margin: 0;
+    font-size: 16px;
+}
+
+.notification:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.notification-card__block-message {
+    width: 300px;
+}
+
+.notification-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.list-notification.ant-list {
+    position: relative;
+}
+
+.customTable .ant-table-thead .ant-table-cell {
+    background-color: #36cfc9 !important;
+    /* Thay đổi màu nền của tiêu đề bảng (header) */
+}
+
+.cardHover:hover .card-image__actions {
+    /* border: 1px solid black !important; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.bg-lightGreen {
+    background-color: #d8e6df;
+}
+
+.centerModal .ant-modal-body {
+    display: flex;
+    justify-content: center;
+}
+
+.imageDetailWithdraw .ant-image-img {
+    width: 45% !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+
+.summary-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    max-width: 400px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: flex-start;
+    font-size: 16px;
+    color: #333;
+}
+
+.info-row span {
+    font-weight: 500;
+    color: #333;
+    margin-right: 8px;
+    /* Tạo khoảng cách giữa tiêu đề và giá trị */
+}
+
+.info-row b {
+    font-weight: 700;
+    color: #000;
+}
+
+.formatCarousel .slick-track {
+    height: 255px;
+}
+
+/* .ant-tag {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+} */
+
+.ant-tag.no_ellipsis {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    max-width: none;
+}
+
+.pointHover {
+    cursor: pointer;
+}
+
+.detail_import .ant-upload-list-picture-card {
+    display: flex;
+    justify-content: center;
+}
+
+.borderBottom {
+    border-bottom: 1px solid #e0d9d9;
+}
+
+/* start tenant */
+
+.tenant-form__card {
+    &.-border-green {
+        border: 2px solid #1DA57A;
+    }
+}
+
+.tenant-form__payment-checkbox {
+    &.-margin-top {
+        margin-top: 4px;
+    }
+}
+
+.tenant-form__payment-form {
+    padding: 8px;
+    color: #1DA57A;
+    border: 2px solid #1DA57A;
+}
+
+.tenant-form__bank-span {
+    &.--payment-checkbox-checked {
+        font-weight: 600;
+        color: #1DA57A;
+        border-bottom: 2px solid #1DA57A;
+    }
+}
+
+.ant-table-tbody>tr.ant-table-row:hover>td {
+    background-color: #dbe7e3 !important;
+}
+
+/* end tenant */
+
+/* start machine */
+.ant-table-sticky-header {
+    overflow: unset !important;
+    top: 55px !important;
+}
+
+/* end machine */
+
+.ant-popover {
+    z-index: 9999;
+}
+
+.ant-modal-mask {
+    z-index: 1002 !important;
+}
+
+.ant-modal-wrap {
+    z-index: 1003;
+}
+
+.ant-pagination-options {
+    display: inline-block !important;
+}
+
+.total-footer__col {
+    border: 1px solid #e4e1e1 !important;
+    padding: 8px;
+}
+
+.ant-table.ant-table-small .ant-table-tbody .ant-table-wrapper:only-child .ant-table {
+    margin: 0px !important;
+}
+
+.ant-table.ant-table-middle .ant-table-tbody .ant-table-wrapper:only-child .ant-table {
+    margin: 0px !important;
+}
+
+.ant-row-middle {
+    width: -webkit-fill-available !important;
+}
+
+.auto-size-upload {
+    .ant-upload-list-picture-card-container {
+        width: 100%;
+        height: auto;
+        min-width: 100px;
+        min-height: 100px;
+    }
+}
+
+.ant-modal-wrap {
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.custom-popover {
+    max-width: 200px;
+    font-size: 12px;
+    padding: 4px;
+}
+
+.custom-popover .ant-space {
+    gap: 4px;
+}
+
+
+.table-footer {
+    width: 100%;
+    border: 1px solid #e4e1e1;
+    table-layout: fixed;
+}
+
+.th-footer-20-percent {
+    padding: 4px;
+    width: 20%;
+}
+
+.th-footer-25-percent {
+    padding: 4px;
+    width: 25%;
+}
+
+.th-footer-33-percent {
+    padding: 4px;
+    width: 33.33%;
+}
+
+.th-footer-50-percent {
+    padding: 4px;
+    width: 50%;
+}
+
+.vertical-separator {
+    width: 1px;
+    background-color: #DBE7E3;
+    border: none;
+    padding: 0;
+}
+.recharts-default-legend {
+    margin-top: -25px !important;
+}
