@@ -37,14 +37,16 @@
     "eslintConfig": {
         "extends": "react-app"
     },
+
     "scripts": {
-        "start": "craco start",
-        "build": "craco build  && start .\\build",
-        "lint": "eslint . --ext .ts,.tsx",
-        "test": "craco test",
-        "eject": "react-scripts eject",
-        "postinstall": "rimraf ./node_modules/@types/babel__traverse"
-    },
+  "start": "craco start",
+  "build": "craco build",
+  "lint": "eslint . --ext .ts,.tsx",
+  "test": "craco test",
+  "eject": "react-scripts eject",
+  "postinstall": "rimraf ./node_modules/@types/babel__traverse"
+},
+
     "devDependencies": {
         "@types/classnames": "^2.2.9",
         "@types/jest": "^24.0.23",
