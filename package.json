@@ -28,22 +28,21 @@
         "react-loadable": "^5.5.0",
         "react-router-dom": "^5.1.2",
         "react-scripts": "^3.2.0",
+        "react-webcam": "^7.2.0",
         "tesseract.js": "^6.0.1",
         "typescript": "^3.9.10"
     },
     "eslintConfig": {
         "extends": "react-app"
     },
-
     "scripts": {
-  "start": "craco start",
-  "build": "craco build",
-  "lint": "eslint . --ext .ts,.tsx",
-  "test": "craco test",
-  "eject": "react-scripts eject",
-  "postinstall": "rimraf ./node_modules/@types/babel__traverse"
-},
-
+        "start": "craco start",
+        "build": "craco build",
+        "lint": "eslint . --ext .ts,.tsx",
+        "test": "craco test",
+        "eject": "react-scripts eject",
+        "postinstall": "rimraf ./node_modules/@types/babel__traverse"
+    },
     "devDependencies": {
         "@types/classnames": "^2.2.9",
         "@types/jest": "^24.0.23",
@@ -74,5 +73,4 @@
             "last 1 safari version"
         ]
     }
-    
 }
