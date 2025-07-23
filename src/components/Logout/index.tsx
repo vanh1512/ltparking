@@ -19,7 +19,7 @@ class Logout extends React.Component<ILogoutProps> {
 		}
 
 		abp.multiTenancy.setTenantIdCookie(undefined);
-		this.props.authenticationStore!.logout();
+		//this.props.authenticationStore!.logout();
 
 		window.location.href = RouterPath.admin;
 	}

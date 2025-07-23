@@ -12,12 +12,8 @@ export const appRouters: any = [
 		title: L('Trang_chu'),
 		icon: HomeOutlined,
 		showInMenu: true,
-		component: LoadableComponent(() => import('@scenes/Dashboard')),
+		component: LoadableComponent(() => import('@src/scenes/SystemManager/PlateScanner')),
 	},
-
-	// appGeneralRouters,
-
-	
 	{
 		path: RouterPath.admin_logout,
 		permission: '',

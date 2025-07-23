@@ -42,6 +42,7 @@ export enum EventTable {
 }
 
 export const pageSizeOptions = ['10', '20', '50', '100', '200', '500'];
+export const formatStringDMYhms = "DD/MM/yyyy HH:mm:ss";
 //định nghĩa tính năng của table
 export const cssCol = (col: number) => {
 	return {

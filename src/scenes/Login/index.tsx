@@ -1,187 +1,211 @@
 import './index.less';
 import * as React from 'react';
-import { Button, Carousel, Col, Drawer, Form, Input, Modal, Row } from 'antd';
-import { UserOutlined, LockOutlined, LogoutOutlined, KeyOutlined } from '@ant-design/icons';
-import { inject, observer } from 'mobx-react';
-import AccountStore from '@stores/accountStore';
-import AuthenticationStore from '@stores/authenticationStore';
+import { Button, Carousel, Checkbox, Col, Form, Input, message, Modal, Row } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { observer } from 'mobx-react';
 import { FormInstance } from 'antd/lib/form';
 import { L } from '@lib/abpUtility';
-import { Link, Redirect } from 'react-router-dom';
-import SessionStore from '@stores/sessionStore';
-import Stores from '@stores/storeIdentifier';
-import TenantAvailabilityState from '@services/account/dto/tenantAvailabilityState';
-import AppConsts, { cssColResponsiveSpan } from '@src/lib/appconst';
-import ResetPassword from './Forgot';
+import AppConsts, { formatStringDMYhms } from '@src/lib/appconst';
 import rules from '@src/components/Validation';
+import signalRAspNetCoreHelper from '@src/lib/signalRAspNetCoreHelper';
+import PlateScanner from '../SystemManager/PlateScanner';
+import { eShiftStatus } from '@src/lib/enumconst';
+import moment from 'moment';
+import VehicleTicketPrint from '../SystemManager/VehicleTicketPrint';
 
+const { confirm } = Modal;
 const FormItem = Form.Item;
-declare var abp: any;
-export interface ILoginProps {
-	authenticationStore?: AuthenticationStore;
-	sessionStore?: SessionStore;
-	accountStore?: AccountStore;
-	history: any;
-	location: any;
-}
 
-@inject(Stores.AuthenticationStore, Stores.SessionStore, Stores.AccountStore)
 @observer
-class Login extends React.Component<ILoginProps> {
+class Login extends React.Component {
+	static shiftID = 0;
+	static gateID = 0;
 	formRef = React.createRef<FormInstance>();
+	infor: any;
 	state = {
-		visibleRegister: false,
-		visibleResetPass: false,
+		isLogin: false,
+		isLoadDone: false,
+		bodyLogin: undefined,
+		checkboxLogin: false,
+		aaaaaa: false,
 	};
+	async componentDidMount() {
+		var checkboxLogin = localStorage.getItem("checkboxLogin");
 
-	changeTenant = async () => {
-		let localStorageTenant = localStorage.getItem('tenantName')!;
+		await this.setState({ checkboxLogin: checkboxLogin == "true" ? true : false })
+		if (checkboxLogin) {
+			this.formRef.current?.setFieldsValue({ Username: localStorage.getItem("Username"), password: localStorage.getItem("password") })
+		}
+		signalRAspNetCoreHelper.registerNotificationHandler(['login'], [this.login]);
+		// const connection = new signalR.HubConnectionBuilder()
+		// 	.withUrl(AppConsts.remoteServiceBaseUrl + "migvnotify",)
+		// 	.build();
 
-		let tenancyName = (this.formRef.current?.getFieldValue('tenancyName') || this.formRef.current?.getFieldValue('tenancyName') == "") ? this.formRef.current?.getFieldValue('tenancyName') : localStorageTenant;
-		const { loginModel } = this.props.authenticationStore!;
-		if (!tenancyName) {
-			abp.multiTenancy.setTenantIdCookie(undefined);
-			return;
-		} else {
-			await this.props.accountStore!.isTenantAvailable(tenancyName);
-			const { tenant } = this.props.accountStore!;
-			let state: number = tenant.state!;
+		// connection.on("login", async (data) => {
+		// 	this.login(data);
+		// });
 
-			switch (state) {
-				case TenantAvailabilityState.Available:
-					abp.multiTenancy.setTenantIdCookie(tenant.tenantId);
-					loginModel.tenancyName = tenancyName;
-					loginModel.toggleShowModal();
-					return;
-				case TenantAvailabilityState.InActive:
-					Modal.error({ title: L('Error'), content: L('TenantIsNotActive') });
-					break;
-				case TenantAvailabilityState.NotFound:
-					Modal.error({ title: L('Error'), content: L('ThereIsNoTenantDefinedWithName{0}', tenancyName) });
-					break;
-			}
+		// connection
+		// 	.start()
+		// 	.then(() => {
+		// 		console.log("🔗 SignalR Connected");
+		// 	})
+		// 	.catch((err) => {
+		// 		console.error("❌ Connection error:", err);
+		// 	});
+		await this.setState({ isLoadDone: !this.state.isLoadDone })
+
+	}
+	login = async (data) => {
+		data = JSON.parse(data);
+		let self = this;
+
+		if (data.ShiftStatus == eShiftStatus.YES.num) {
+			confirm({
+				title: (
+					<>
+						Ca làm việc lần trước bắt đầu lúc <strong>{data.Note}</strong> vẫn chưa đóng. Bạn có muốn tiếp tục ca làm việc không?
+					</>
+				),
+				okText: L('Có'),
+				cancelText: L('Không, bắt đầu ca mới'),
+				async onOk() {
+					await self.setState({ bodyLogin: { ...(self.state.bodyLogin || {}), ShiftStatus: eShiftStatus.YES.num } })
+					await self.sendRequest(self.state.bodyLogin);
+					message.success(L("Tiếp tục"))
+				},
+				async onCancel() {
+					await self.sendRequest({ ...(self.state.bodyLogin || {}), ShiftStatus: eShiftStatus.NO.num });
+					message.success("Bắt đầu ca làm việc mới:" + moment().format(formatStringDMYhms), 5) // tính bằng giây
+				},
+			});
+		}
+		else if (data.Status == false) {
+			message.error(L("Đã có phiên đăng nhập khác. Vui lòng kiểm tra lại!!!"))
+			//window.location.reload();
+		}
+		else if (data.Status == true) {
+			await this.setState({ isLogin: true });
+			Login.shiftID = Number(data.Note.split(',')[0]);
+			Login.gateID = Number(data.Note.split(',')[1]);
+			localStorage.setItem("shiftID", data.Note.split(',')[0]);
+			localStorage.setItem("gateID", data.Note.split(',')[1]);
+		}
+		else
+			message.error(data["Note"])
+	}
+	handleSubmit = async (values: any) => {
+		await this.setState({ bodyLogin: { ...values, ShiftStatus: 0 } })
+		await this.sendRequest(this.state.bodyLogin);
+
+		localStorage.setItem("checkboxLogin", this.state.checkboxLogin.toString());
+
+		if (this.state.checkboxLogin) {
+			localStorage.setItem("Username", values.Username);
+			localStorage.setItem("password", values.password);
+		}
+		else {
+			localStorage.clear();
 		}
 	};
+	sendRequest = async (values: any) => {
+		await fetch(AppConsts.remoteServiceBaseUrl + "api/services/app/FastAPI/Login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ result: JSON.stringify(values) })
+		});
 
-	handleSubmit = async (values: any) => {
-		await this.changeTenant();
-		const { loginModel } = this.props.authenticationStore!;
-		await this.props.authenticationStore!.login(values);
-		sessionStorage.setItem('rememberMe', loginModel.rememberMe ? '1' : '0');
-		localStorage.setItem('tenantName', loginModel.tenancyName || "");
-		const { state } = this.props.location;
-		window.location = state ? state.from.pathname : '/';
 	};
-
+	handleSaveVehicle = () => {
+		this.infor.aaaa = "aaaaaa";
+	};
 	render() {
-
-		let { from } = this.props.location.state || { from: { pathname: '/' } };
-		if (this.props.authenticationStore!.isAuthenticated) return <Redirect to={from} />;
 		return (
-			<>
-				<Row>
-					<Drawer
-						title={L('quen_mat_khau') + "?"}
-						width={500}
-						maskClosable={false}
-						closable={true}
-						visible={this.state.visibleResetPass}
-						headerStyle={{ justifyContent: 'center', display: 'flex' }}
-						placement='right'
-						onClose={() => this.setState({ visibleResetPass: false })}
-					>
-						<ResetPassword />
-					</Drawer>
-					<div style={{ position: 'relative' }}>
-						<div style={{ position: 'absolute', zIndex: 100, top: 10, left: 10 }}>
-							<img src={process.env.PUBLIC_URL + "/logo_mig.png"} style={{ width: 'auto', height: 60 }}></img>
-						</div>
-						<Carousel autoplay autoplaySpeed={5000} className='login-form-carousel'>
-							<div><img src={process.env.PUBLIC_URL + "/bg_login_2.png"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
-							<div><img src={process.env.PUBLIC_URL + "/bg_login_1.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
-							<div><img src={process.env.PUBLIC_URL + "/bg_login_3.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
-							<div><img src={process.env.PUBLIC_URL + "/bg_login_4.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
-							<div><img src={process.env.PUBLIC_URL + "/bg_login_5.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
-						</Carousel>
-					</div>
-					<div className='login-form-info'>
-						<h1 style={{ fontWeight: 'bold', marginTop: '5vh', color: 'rgb(254, 146, 22)' }}>Vending Machine</h1>
-						<h2 style={{ fontWeight: 'bold' }}>{L('dang_nhap')}</h2>
-						<Row className='login-form-input'>
-							<img src={process.env.PUBLIC_URL + "/vending_machine_icon.png"} style={{ width: '70px', height: "70px", margin: "15px 0 20px 0" }} />
-							<Col offset={3} span={18}>
-								<Form onFinish={this.handleSubmit} ref={this.formRef}>
-									<p className='login-form-label'>Tenancy</p>
-									<FormItem name={'tenancyName'}
-									// rules={[rules.required, rules.maxName, rules.noSpaces] }
-									>
-										<Input
-											defaultValue={(localStorage.getItem('tenantName')! || "")}
-											prefix={<KeyOutlined style={{ color: 'rgba(0,0,0,.25)', paddingRight: '5px' }} />}
-											placeholder={L('Tenancy')}
-											value={(localStorage.getItem('tenantName')! || "")}
-										/>
-									</FormItem>
-									<p className='login-form-label'>{L('ten_dang_nhap')}</p>
-									<FormItem name={'userNameOrEmailAddress'} rules={[rules.required, rules.noSpaces]}>
-										<Input
-											maxLength={AppConsts.maxLength.name}
-											placeholder={L('UserNameOrEmail')}
-											prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)', paddingRight: '5px' }} />}
-											size="large"
-											style={{ width: '100%', height: '44px', borderRadius: '7px' }}
-										/>
-									</FormItem>
-									<p className='login-form-label'>{L('mat_khau')}</p>
-									<FormItem name={'password'} rules={[rules.required, rules.password]}>
-										<Input.Password
-											placeholder={L('Password')}
-											prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)', paddingRight: '5px' }} />}
-											type="password"
-											size="large"
-											//onPressEnter={this.handleSubmit}
-											style={{ width: '100%', height: '44px', borderRadius: '7px' }}
-										/>
-									</FormItem>
 
-									<Row style={{ marginTop: '-15px' }}>
-										<FormItem>
-											<a className='login-form-label' onClick={() => this.setState({ visibleResetPass: true })}><LogoutOutlined /> <u>{L('quen_mat_khau')}?</u></a>
+			this.state.isLogin ?
+				<PlateScanner /> :
+				<>
+					<Row>
+						<div style={{ position: 'relative' }}>
+							<div style={{ position: 'absolute', zIndex: 100, top: 10, left: 10 }}>
+								<img src={process.env.PUBLIC_URL + "/Logo_Client.png"} style={{ width: 'auto', height: 60 }}></img>
+							</div>
+							<Carousel autoplay autoplaySpeed={5000} className='login-form-carousel'>
+								<div><img src={process.env.PUBLIC_URL + "/bg_login_2.png"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
+								<div><img src={process.env.PUBLIC_URL + "/bg_login_1.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
+								<div><img src={process.env.PUBLIC_URL + "/bg_login_3.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
+								<div><img src={process.env.PUBLIC_URL + "/bg_login_4.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
+								<div><img src={process.env.PUBLIC_URL + "/bg_login_5.jpg"} style={{ height: '100vh', width: '100%', objectFit: 'cover' }}></img></div>
+							</Carousel>
+						</div>
+						<div className='login-form-info'>
+							<Row justify='center'>
+								<h1 style={{ fontWeight: 'bold', marginTop: '5vh', color: 'rgb(254, 146, 22)' }}>LifeTechParking</h1>
+							</Row>
+							<Row className='login-form-input' justify='center'>
+								<Row justify='center'>
+									<img src={process.env.PUBLIC_URL + "/Logo_Client.png"} style={{ width: '70px', height: "70px", margin: "15px 0 20px 0" }} />
+								</Row>
+								<Col offset={3} span={18}>
+									<Form onFinish={this.handleSubmit} ref={this.formRef}>
+										<p className='login-form-label'>{L('Tên đăng nhập')}</p>
+										<FormItem name={'Username'} rules={[rules.required]}>
+											<Input
+												maxLength={AppConsts.maxLength.name}
+												placeholder={L('Tên đăng nhập')}
+												prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)', paddingRight: '5px' }} />}
+												size="large"
+												style={{ width: '100%', height: '44px', borderRadius: '7px' }}
+											/>
 										</FormItem>
-									</Row>
-									<Col style={{ fontSize: '15px', justifyItems: 'center' }}>
-										<Button
-											htmlType={'submit'}
-											type={"primary"}
-											style={{ width: '100%', height: '40px', borderRadius: "20px", fontWeight: 700 }}
-										>
-											{L('dang_nhap')}
-										</Button>
-									</Col>
-								</Form>
-							</Col>
+										<p className='login-form-label'>{L('Mật khẩu')}</p>
+										<FormItem name={'password'} rules={[rules.required]}>
+											<Input.Password
+												placeholder={L('Mật khẩu')}
+												prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)', paddingRight: '5px' }} />}
+												type="password"
+												size="large"
+												onPressEnter={this.handleSubmit}
+												style={{ width: '100%', height: '44px', borderRadius: '7px' }}
 
-						</Row>
-						<div style={{ fontFamily: "Arial, sans-serif", padding: "20px",  textAlign: "left" }}>
-							<p style={{ fontSize: "18px", fontWeight: "bold", color: 'rgb(254, 146, 22)', }}>
-								Ngoài ra chúng tôi còn cung cấp các dịch vụ khác như:
-							</p>
-							<ol className='ol_login' style={{ listStyle: "none", padding: 0 }}>
-								<li style={{ margin: "10px 0", fontSize: "13px" }}>✅ <a target='_blank' href="https://migviet.com/giai-phap-so-hoa-di-tich-bao-tang-dia-diem-du-lich/">Giải pháp số hóa di tích, bảo tàng, địa điểm du lịch</a></li>
-								<li style={{ margin: "10px 0", fontSize: "13px" }}>✅ <a target='_blank' href="https://migviet.com/he-thong-quan-ly-chat-luong-san-pham/">Giải pháp CDS cho các dây chuyền Sản xuất trong nhà máy</a></li>
-								<li style={{ margin: "10px 0", fontSize: "13px" }}>✅ <a target='_blank' href="https://migviet.com/phan-mem-so-hoa-va-quan-ly-ho-so-luu-tru-dien-tu-mig-ocr/">Phần Mềm Số Hóa, Quản Lý Hồ Sơ Lưu Trữ Điện Tử</a></li>
-								<li style={{ margin: "10px 0", fontSize: "13px" }}>✅ <a target='_blank' href="https://migviet.com/2021/11/07/mig-elearning/">Mig E - Learning</a></li>
-								<li style={{ margin: "10px 0", fontSize: "13px" }}>✅ <a target='_blank' href="https://migviet.com/he-thong-mo-phong-lai-xe-o-to/">Hệ Thống Mô Phỏng Lái Xe</a></li>
-								<li style={{ margin: "10px 0", fontSize: "13px" }}>✅ <a target='_blank' href="https://migviet.com/giai-phap-tong-the-truyen-thong-va-quang-cao-ky-thuat-so-mig-digital-signage/">Mig Digital Signage - Giải Pháp Quảng Cáo Số</a></li>
-							</ol>
+											/>
+										</FormItem>
+
+										<Col style={{ fontSize: '15px', justifyItems: 'center' }}>
+											<Checkbox checked={this.state.checkboxLogin} onChange={(e) => this.setState({ checkboxLogin: e.target.checked })}>Ghi nhớ đăng nhập</Checkbox>
+											<Button
+												htmlType={'submit'}
+												type={"primary"}
+												style={{ width: '100%', height: '40px', borderRadius: "20px", fontWeight: 700 }}
+											>
+												{L('Đăng nhập')}
+											</Button>
+										</Col>
+										<Col style={{ fontSize: '15px', justifyItems: 'center' }}>
+											<Button
+												type={"primary"}
+												style={{ width: '100%', height: '40px', borderRadius: "20px", fontWeight: 700 }}
+												onClick={() => { this.infor = "aaaaaa"; this.setState({ aaaaaa: true }) }}
+											>
+												{L('In')}
+											</Button>
+										</Col>
+									</Form>
+								</Col>
+
+							</Row>
 						</div>
 
-					</div>
-
-				</Row >
-			</>
+					</Row >
+					{this.state.aaaaaa &&
+						<VehicleTicketPrint vehicle={this.infor} onClose={() => this.setState({ aaaaaa: false })}></VehicleTicketPrint>
+					}
+				</>
 		);
 	}
 }
+
 
 export default Login;

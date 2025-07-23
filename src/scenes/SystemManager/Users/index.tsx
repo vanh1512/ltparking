@@ -4,7 +4,6 @@ import { L } from '@lib/abpUtility';
 import AppConsts, { pageSizeOptions, RouterPath } from '@lib/appconst';
 import HistoryHelper from '@lib/historyHelper';
 import AppComponentBase from '@src/components/Manager/AppComponentBase';
-import { eActive } from '@src/lib/enumconst';
 import { Int64EntityDto, UserDto } from '@src/services/services_autogen';
 import { stores } from '@src/stores/storeInitializer';
 import { Button, Card, Col, Input, Modal, Row, Skeleton, Space, Switch, Table, message } from 'antd';
@@ -153,7 +152,7 @@ export default class User extends AppComponentBase {
 		confirm({
 			title:L("ban_muon_dang_nhap_vao_tai_khoan_nguoi_dung_nay_khong"),
 			async onOk() {
-				await stores.authenticationStore.adminLoginUserWithoutPassword(user.id);
+				//await stores.authenticationStore.adminLoginUserWithoutPassword(user.id);
 			},
 			onCancel() {
 				console.log('Cancel');

@@ -21,7 +21,7 @@ const rules = {
 		 });
 	  },
    },
-   required: { required: true, message: L("truong_nay_la_bat_buoc") },
+   required: { required: true, message: L("Không được để trống!!!") },
    requiredNumber: {
 	  pattern: /^(?:[1-9]\d*|0\.\d*[1-9]\d*)$/,
 	  message: L("truong_nay_la_bat_buoc")

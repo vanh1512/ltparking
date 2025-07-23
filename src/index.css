@@ -1,6 +1,47 @@
 html {
     overflow: hidden;
 }
+.ant-image-preview-root {
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+/* Hide everything except the ticket when printing */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #ticket-print-area,
+    #ticket-print-area * {
+        visibility: visible;
+    }
+
+    #ticket-print-area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 58mm;
+        /* for thermal receipt printers */
+    }
+}
+
+.ticket {
+    font-family: monospace;
+    width: 58mm;
+    padding: 10px;
+    text-align: center;
+}
+
+.ticket h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.ticket p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
 
 body {
     margin: 0;
@@ -14,9 +55,9 @@ body {
     padding: 10px;
 }
 
-.ant-modal-body {
+/* .ant-modal-body {
     padding-top: 0;
-}
+} */
 
 .ant-table-container {
     font-size: 12px;
@@ -107,6 +148,7 @@ h2 {
 .text-purple {
     color: #9254de;
 }
+
 .center {
     text-align: center !important;
 }
@@ -532,9 +574,11 @@ h2 {
     margin: 0 !important;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
-.ant-select-selection-item .hintImage{
-display: none !important;
+
+.ant-select-selection-item .hintImage {
+    display: none !important;
 }
+
 .imageDetailProductImport {
     display: flex !important;
     justify-content: center !important;
@@ -557,7 +601,8 @@ display: none !important;
 .imageProduct .ant-image-img {
     width: 60% !important;
 }
-.image-statistic-product{
+
+.image-statistic-product {
     width: 40% !important;
 }
 
@@ -784,10 +829,10 @@ display: none !important;
 /* end tenant */
 
 /* start machine */
-.ant-table-sticky-header {
+/* .ant-table-sticky-header {
     overflow: unset !important;
     top: 55px !important;
-}
+} */
 
 /* end machine */
 
@@ -880,6 +925,7 @@ display: none !important;
     border: none;
     padding: 0;
 }
+
 .recharts-default-legend {
     margin-top: -25px !important;
 }

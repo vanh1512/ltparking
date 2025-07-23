@@ -2,7 +2,6 @@ import * as React from 'react';
 import { L, isGranted } from '@src/lib/abpUtility';
 import { AppConsts } from '@src/lib/appconst';
 import { message } from 'antd';
-import { FileDto } from '@src/services/services_autogen';
 import moment, { Moment } from 'moment';
 declare var abp: any;
 declare var document: any;
@@ -33,10 +32,7 @@ class AppComponentBase<P = {}, S = {}, SS = any> extends React.Component<P, S, S
 		let pathFile_modified = encodeURI(pathFile + "");
 		return `${AppConsts.remoteServiceBaseUrl} downloadFileInFolder?pathFolder=${pathFolder_modified}&pathFile=${pathFile_modified}`;
 	}
-	getFileOfUser(item: FileDto) {
-		let fi_id_modified = encodeURI(item.fi_id + "");
-		return AppConsts.remoteServiceBaseUrl + "download/file?path=" + fi_id_modified;
-	}
+	
 	getImageProduct(md5: string) {
 		let fi_md5_modified = encodeURI(md5);
 		return AppConsts.remoteServiceBaseUrl + "download/imageProduct?path=" + fi_md5_modified;

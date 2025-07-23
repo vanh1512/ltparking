@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Checkbox, Input, Tabs, Form, Card, Button, message, Col, Row } from 'antd';
 import { L } from '@lib/abpUtility';
-import { CreateRepositoryInput, CreateUserDto, RoleDto, UpdateUserInput, UserDto } from '@services/services_autogen';
+import {  CreateUserDto, RoleDto, UpdateUserInput, UserDto } from '@services/services_autogen';
 import { stores } from '@src/stores/storeInitializer';
 import AppConsts from '@src/lib/appconst';
 import CheckboxGroup from 'antd/lib/checkbox/Group';

@@ -98,7 +98,7 @@ export default class Tenant extends React.Component {
 			confirm({
 				title: L("ban_muon_dang_nhap_vao_tai_khoan_tenant_nay_khong"),
 				async onOk() {
-					await stores.authenticationStore.adminLoginWithoutPassword(tenant.tenancyName, tenant.id);
+					//await stores.authenticationStore.adminLoginWithoutPassword(tenant.tenancyName, tenant.id);
 					await self.setState({ isLoadDone: !self.state.isLoadDone });
 				},
 				onCancel() {

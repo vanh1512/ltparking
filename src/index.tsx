@@ -31,53 +31,54 @@ Utils.setLocalization();
 //     }
 //   }
 // }
-abpUserConfigurationService.getAll().then(async data => {
+// abpUserConfigurationService.getAll().then(async data => {
 
-	Utils.extend(true, abp, data.data.result);
-	abp.clock.provider = Utils.getCurrentClockProvider(data.data.result.clock.provider);
+// 	Utils.extend(true, abp, data.data.result);
+// 	abp.clock.provider = Utils.getCurrentClockProvider(data.data.result.clock.provider);
 
-	// momenttimezone.tz.setDefault('Asia/Ho_Chi_Minh');
-	//moment.locale('vi');
-	//moment.locale('en');
-	moment.locale(abp.localization.currentLanguage.name);
+// 	// momenttimezone.tz.setDefault('Asia/Ho_Chi_Minh');
+// 	//moment.locale('vi');
+// 	//moment.locale('en');
+// 	moment.locale(abp.localization.currentLanguage.name);
 
-	if (abp.clock.provider.supportsMultipleTimezone) {
-		//moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
-	}
+// 	if (abp.clock.provider.supportsMultipleTimezone) {
+// 		//moment.tz.setDefault(abp.timing.timeZoneInfo.iana.timeZoneId);
+// 	}
 
 
-	if (abp.session.userId) {
-		const session = stores.sessionStore;
-		if (session !== undefined) {
+// 	if (abp.session.userId) {
+// 		const session = stores.sessionStore;
+// 		if (session !== undefined) {
 
-			await session!.getCurrentLoginInformations();
-			if (session!.isUserLogin()) {
-				if (session!.getUserLogin() !== undefined) {
-					// let user = session!.getUserLogin();
+// 			await session!.getCurrentLoginInformations();
+// 			if (session!.isUserLogin()) {
+// 				if (session!.getUserLogin() !== undefined) {
+// 					// let user = session!.getUserLogin();
 
-				}
-				let _releaseDate = abp.utils.getCookieValue(AppConsts.authorization.releaseDate);
-				if (!!_releaseDate) {
-					if (_releaseDate !== session!.currentLogin.application!.releaseDate!.toString()) {
-						abp.utils.deleteCookie(AppConsts.authorization.initSheetData);
-						abp.utils.deleteCookie(AppConsts.authorization.releaseDate);
-						abp.utils.setCookieValue(AppConsts.authorization.releaseDate, session!.currentLogin.application!.releaseDate!.toString(), new Date(new Date().getTime() + 5 * 365 * 86400000), abp.appPath, true);
-					}
-				}
-			}
-		}
-	}
+// 				}
+// 				let _releaseDate = abp.utils.getCookieValue(AppConsts.authorization.releaseDate);
+// 				if (!!_releaseDate) {
+// 					if (_releaseDate !== session!.currentLogin.application!.releaseDate!.toString()) {
+// 						abp.utils.deleteCookie(AppConsts.authorization.initSheetData);
+// 						abp.utils.deleteCookie(AppConsts.authorization.releaseDate);
+// 						abp.utils.setCookieValue(AppConsts.authorization.releaseDate, session!.currentLogin.application!.releaseDate!.toString(), new Date(new Date().getTime() + 5 * 365 * 86400000), abp.appPath, true);
+// 					}
+// 				}
+// 			}
+// 		}
+// 	}
 
-	ReactDOM.render(
-		<Provider {...stores}>
-			<BrowserRouter>
-				<ConfigProvider locale={vi_VN}>
-					<App />
-				</ConfigProvider>
-			</BrowserRouter>
-		</Provider>,
-		document.getElementById('root') as HTMLElement
-	);
+// });
 
-	registerServiceWorker();
-});
+ReactDOM.render(
+	<Provider {...stores}>
+		<BrowserRouter>
+			<ConfigProvider locale={vi_VN}>
+				<App />
+			</ConfigProvider>
+		</BrowserRouter>
+	</Provider>,
+	document.getElementById('root') as HTMLElement
+);
+
+//registerServiceWorker();

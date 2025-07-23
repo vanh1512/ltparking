@@ -1,6 +1,8 @@
 import { action, observable } from 'mobx';
 import http from '@services/httpService';
-import { ChangePasswordDto, ChangeUserLanguageDto, CreateUserDto, UserDtoPagedResultDto, ResetPasswordDto, RoleDto, UpdateAvataInput, UpdatePassword2Input, UserDto, UserService, UpdateUserInput, Int64EntityDto, CreateRepositoryInput } from '@services/services_autogen';
+import { ChangePasswordDto, ChangeUserLanguageDto, CreateUserDto,
+	 UserDtoPagedResultDto, ResetPasswordDto, RoleDto, UpdateAvataInput, UpdatePassword2Input,
+	  UserDto, UserService, UpdateUserInput, Int64EntityDto } from '@services/services_autogen';
 import { stores } from './storeInitializer';
 
 
